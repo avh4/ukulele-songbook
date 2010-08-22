@@ -6,4 +6,10 @@ public interface SongbookWindowView {
 		public void actionPrint();
 	}
 
+	public void showWindow();
+
+	public String getSongText();
+
+	public void setSongText(String string);
+
 }

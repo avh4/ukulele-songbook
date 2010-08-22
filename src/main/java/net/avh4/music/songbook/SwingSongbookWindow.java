@@ -96,4 +96,11 @@ public class SwingSongbookWindow extends JFrame implements SongbookWindowView,
 		getTextSong().setText(string);
 	}
 
+	public void showWindow() {
+		pack();
+		setLocationRelativeTo(null);
+		setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
 }

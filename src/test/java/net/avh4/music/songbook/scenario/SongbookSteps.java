@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import javax.swing.JFrame;
+
 import net.avh4.music.songbook.Services;
 import net.avh4.music.songbook.SongbookApplication;
 
@@ -42,7 +44,7 @@ public abstract class SongbookSteps extends Steps {
 		app = new SongbookApplication(mockServices);
 		app.start();
 		assertThat("Could not launch the application", app, notNullValue());
-		window = new FrameFixture(app.getMainWindow());
+		window = new FrameFixture((JFrame) app.getMainWindow());
 		assertThat(window, notNullValue());
 	}
 

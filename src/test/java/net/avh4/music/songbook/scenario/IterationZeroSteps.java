@@ -19,9 +19,10 @@ public class IterationZeroSteps extends SongbookSteps {
 
 	@Then("I should see the application window")
 	public void assertApplicationWindow() {
-		JFrame window = app.getMainWindow();
+		Object window = app.getMainWindow();
 		assertThat(window, notNullValue());
-		assertThat(window.isVisible(), is(true));
+		assertThat(window, is(JFrame.class));
+		assertThat(((JFrame) window).isVisible(), is(true));
 	}
 
 	@Then("I should see the appropriate rendered page")

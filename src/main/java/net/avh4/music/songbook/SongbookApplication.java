@@ -3,15 +3,13 @@ package net.avh4.music.songbook;
 import java.io.IOException;
 import java.io.Writer;
 
-import javax.swing.JFrame;
-
 public class SongbookApplication implements SongbookWindowView.Actions {
 
 	public static void main(String args[]) {
 		new SongbookApplication(new SwingServices()).start();
 	}
 
-	private final SwingSongbookWindow window;
+	private final SongbookWindowView window;
 	private final Services services;
 
 	public SongbookApplication(Services services) {
@@ -19,15 +17,12 @@ public class SongbookApplication implements SongbookWindowView.Actions {
 		window = new SwingSongbookWindow(this);
 	}
 
-	public JFrame getMainWindow() {
+	public SongbookWindowView getMainWindow() {
 		return window;
 	}
 
 	public void start() {
-		window.pack();
-		window.setLocationRelativeTo(null);
-		window.setVisible(true);
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.showWindow();
 	}
 
 	public void actionPrint() {
