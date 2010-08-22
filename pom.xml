@@ -14,12 +14,56 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.jbehave</groupId>
+        <artifactId>jbehave-maven-plugin</artifactId>
+        <version>2.5.4</version>
+        <configuration></configuration>
+        <executions>
+          <execution>
+            <id>run-scenarios-found</id>
+            <phase>test</phase>
+            <configuration>
+              <scenarioIncludes>
+                <scenarioInclude>**/scenario/**/*.java</scenarioInclude>
+              </scenarioIncludes>
+              <scenarioExcludes>
+                <scenarioExclude>**/*Steps.java</scenarioExclude>
+              </scenarioExcludes>
+              <classLoaderInjected>false</classLoaderInjected>
+              <scope>test</scope>
+            </configuration>
+            <goals>
+              <goal>run-scenarios</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>4.8.1</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+    	<groupId>org.jbehave</groupId>
+    	<artifactId>jbehave-maven-plugin</artifactId>
+    	<version>2.5.4</version>
+    	<type>maven-plugin</type>
+    	<scope>test</scope>
     </dependency>
   </dependencies>
 </project>
