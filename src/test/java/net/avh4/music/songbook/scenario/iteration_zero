@@ -1,0 +1,6 @@
+Story: Iteration Zero
+
+Scenario: Display a UI screen
+
+	When I launch the application
+	Then I should see the application window
