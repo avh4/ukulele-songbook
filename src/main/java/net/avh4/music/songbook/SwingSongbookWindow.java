@@ -1,6 +1,7 @@
 package net.avh4.music.songbook;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -33,9 +34,8 @@ public class SwingSongbookWindow extends JFrame implements SongbookWindowView,
 	 * @return void
 	 */
 	private void initialize() {
-		this.setSize(300, 200);
 		this.setContentPane(getJContentPane());
-		this.setTitle("JFrame");
+		this.setTitle("Ukulele Songbook");
 	}
 
 	/**
@@ -83,6 +83,7 @@ public class SwingSongbookWindow extends JFrame implements SongbookWindowView,
 		if (textSong == null) {
 			textSong = new JTextArea();
 			textSong.setName("song");
+			textSong.setPreferredSize(new Dimension(400, 300));
 		}
 		return textSong;
 	}
