@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 public class SwingSongbookWindow extends JFrame implements SongbookWindowView,
 		ActionListener {
@@ -15,6 +16,7 @@ public class SwingSongbookWindow extends JFrame implements SongbookWindowView,
 	private JPanel jContentPane = null;
 	private JButton buttonPrint = null;
 	private final Actions handler;
+	private JTextArea textSong = null;
 
 	/**
 	 * This is the default constructor
@@ -45,7 +47,8 @@ public class SwingSongbookWindow extends JFrame implements SongbookWindowView,
 		if (jContentPane == null) {
 			jContentPane = new JPanel();
 			jContentPane.setLayout(new BorderLayout());
-			jContentPane.add(getButtonPrint(), BorderLayout.CENTER);
+			jContentPane.add(getButtonPrint(), BorderLayout.SOUTH);
+			jContentPane.add(getTextSong(), BorderLayout.CENTER);
 		}
 		return jContentPane;
 	}
@@ -59,6 +62,7 @@ public class SwingSongbookWindow extends JFrame implements SongbookWindowView,
 		if (buttonPrint == null) {
 			buttonPrint = new JButton();
 			buttonPrint.setText("Print");
+			buttonPrint.setName("print");
 			buttonPrint.addActionListener(this);
 		}
 		return buttonPrint;
@@ -68,6 +72,27 @@ public class SwingSongbookWindow extends JFrame implements SongbookWindowView,
 		if (e.getSource() == buttonPrint) {
 			handler.actionPrint();
 		}
+	}
+
+	/**
+	 * This method initializes textSong
+	 * 
+	 * @return javax.swing.JTextArea
+	 */
+	private JTextArea getTextSong() {
+		if (textSong == null) {
+			textSong = new JTextArea();
+			textSong.setName("song");
+		}
+		return textSong;
+	}
+
+	public String getSongText() {
+		return getTextSong().getText();
+	}
+
+	public void setSongText(String string) {
+		getTextSong().setText(string);
 	}
 
 }

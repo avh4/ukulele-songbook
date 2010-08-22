@@ -1,0 +1,9 @@
+As a Ukulele Player
+I want to enter new songs
+So that I can have songs that don't exist online
+
+Scenario: Entering a song
+
+	Given that the application has been started
+	When I enter a song "[Bb] I've been a-ramblin"
+	Then the currently selected song is "[Bb] I've been a-ramblin"

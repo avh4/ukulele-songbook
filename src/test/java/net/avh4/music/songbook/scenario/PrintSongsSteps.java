@@ -15,11 +15,12 @@ public class PrintSongsSteps extends SongbookSteps {
 	public void enterSong() {
 		startApp();
 		assertThat(app.getSelectedSong(), notNullValue());
+		app.setSong("[C] Lyrics to the [F] tune of [G7] this [C] song");
 	}
 
 	@When("I ask to print the song")
 	public void actionPrint() {
-		app.actionPrint();
+		window.button("print").click();
 	}
 
 	@Then("I see the song in a printable format")

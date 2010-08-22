@@ -13,7 +13,6 @@ public class SongbookApplication implements SongbookWindowView.Actions {
 
 	private final SwingSongbookWindow window;
 	private final Services services;
-	private final String selectedSong = "[C] Lyrics to the [F] tune of [G7] this [C] song";
 
 	public SongbookApplication(Services services) {
 		this.services = services;
@@ -34,7 +33,7 @@ public class SongbookApplication implements SongbookWindowView.Actions {
 	public void actionPrint() {
 		try {
 			Writer w = services.getTempHtmlFile();
-			w.append(selectedSong);
+			w.append(getSelectedSong());
 			w.flush();
 			w.close();
 			services.printFile(w);
@@ -44,6 +43,10 @@ public class SongbookApplication implements SongbookWindowView.Actions {
 	}
 
 	public String getSelectedSong() {
-		return selectedSong;
+		return window.getSongText();
+	}
+
+	public void setSong(String string) {
+		window.setSongText(string);
 	}
 }
