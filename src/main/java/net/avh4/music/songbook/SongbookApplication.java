@@ -5,18 +5,19 @@ import java.io.Writer;
 
 import javax.swing.JFrame;
 
-public class SongbookApplication {
+public class SongbookApplication implements SongbookWindowView.Actions {
 
 	public static void main(String args[]) {
 		new SongbookApplication(new SwingServices()).start();
 	}
 
-	private final JFrame window;
+	private final SwingSongbookWindow window;
 	private final Services services;
+	private final String selectedSong = "[C] Lyrics to the [F] tune of [G7] this [C] song";
 
 	public SongbookApplication(Services services) {
 		this.services = services;
-		window = new JFrame();
+		window = new SwingSongbookWindow(this);
 	}
 
 	public JFrame getMainWindow() {
@@ -30,15 +31,19 @@ public class SongbookApplication {
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
-	public void showRenderedPage() {
+	public void actionPrint() {
 		try {
 			Writer w = services.getTempHtmlFile();
-			w.append("<html>Ukulele Songbook</html>");
+			w.append(selectedSong);
 			w.flush();
 			w.close();
-			services.openTempHtmlFile();
+			services.printFile(w);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public String getSelectedSong() {
+		return selectedSong;
 	}
 }

@@ -1,0 +1,9 @@
+As a Ukulele Player,
+I want to print songs
+So that I can have them with me when I play
+
+Scenario: Printing a song
+
+	Given that a song has been entered and selected
+	When I ask to print the song
+	Then I see the song in a printable format

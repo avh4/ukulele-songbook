@@ -7,6 +7,6 @@ public interface Services {
 
 	public Writer getTempHtmlFile() throws IOException;
 
-	public void openTempHtmlFile() throws IOException;
+	public void printFile(Writer token) throws IOException;
 
 }

@@ -17,7 +17,7 @@ public class SwingServices implements Services {
 		return writer;
 	}
 
-	public void openTempHtmlFile() throws IOException {
+	public void printFile(Writer token) throws IOException {
 		if (tempFile == null) {
 			throw new RuntimeException(
 					"Asked to display an HTML file in the browser, "
