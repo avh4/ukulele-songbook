@@ -4,3 +4,9 @@ Scenario: Display a UI screen
 
 	When I launch the application
 	Then I should see the application window
+
+Scenario: Launch web browser with a rendered page
+
+	Given that the application is running
+	When I request an action that launches a web browser
+	Then I should see the appropriate rendered page
