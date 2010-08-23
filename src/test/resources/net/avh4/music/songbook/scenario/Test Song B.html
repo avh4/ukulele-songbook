@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title></title>
+  <style type="text/css">
+.tab { overflow: auto; position: relative; }
+h1 { margin-bottom: 0; }
+.title { margin: 1em; }
+h2 { font-weight: bold; font-size: 100%; margin-top: 1.5em; margin-bottom: .5em; text-indent: -2em; }
+h2:after { content: ':'; }
+h2.repeat:after { content: ''; }
+.stanza { margin: .5em 0; }
+.line { text-indent: -2em; }
+
+.fingerings { width: 150pt; position: absolute; }
+.fingering { display: inline-block; }
+
+.lyrics { margin: 1em 2em 1em 200pt; }
+.chord { color: blue; margin: .2em; }
+.chord:before { content: "["; }
+.chord:after { content: "]"; }
+
+@media print {
+  .tab { page-break-after: always; }
+}
+@media screen {
+  .tab { border: 1px solid black; margin: 2em; }
+}
+  </style>
+
+  <script src="http://github.com/avh4/jtab-uke/raw/master/javascripts/prototype.js" type="text/javascript"></script>
+  <script src="http://github.com/avh4/jtab-uke/raw/master/javascripts/raphael.js" type="text/javascript"></script>
+  <script src="http://github.com/avh4/jtab-uke/raw/master/javascripts/jtab.js" type="text/javascript"></script>
+</head>
+
+<body>
+  <div class="tab">
+    <div class="title">
+    </div>
+    <div class="fingerings">
+<div class="fingering jtab"> C </div>
+<div class="fingering jtab"> F </div>
+<div class="fingering jtab"> G7 </div>
+    </div>
+    <div class="lyrics">
+<div class="stanza"><div class="line"><span class="chord">C</span>Lyrics to the <span class="chord">F</span>tune of <span class="chord">G7</span>this <span class="chord">C</span>song</div></div>
+    </div>
+  </div>
+</body>
+</html>

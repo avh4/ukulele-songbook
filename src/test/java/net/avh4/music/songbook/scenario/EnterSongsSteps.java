@@ -21,8 +21,8 @@ public class EnterSongsSteps extends SongbookSteps {
 
 	@Then("the currently selected song is \"[Bb] I've been a-ramblin\"")
 	public void verifySong() throws IOException {
-		window.button("print").click();
-		verifyRenderedPage("[Bb] I've been a-ramblin");
+		actionPrint();
+		verifyRenderedPage("Test Song A.html");
 	}
 
 }

@@ -1,0 +1,9 @@
+As a Ukulele Player,
+I want to print tabs in a readable format
+So that many people can play at the same time
+
+Scenario: Printing a tab in readable format
+
+	Given the song "Though My Soul" has been entered and selected
+	When I ask to print the song
+	Then the printed version looks like "Though My Soul.html"

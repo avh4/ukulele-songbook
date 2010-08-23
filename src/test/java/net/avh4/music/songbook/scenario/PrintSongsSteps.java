@@ -7,25 +7,19 @@ import java.io.IOException;
 
 import org.jbehave.scenario.annotations.Given;
 import org.jbehave.scenario.annotations.Then;
-import org.jbehave.scenario.annotations.When;
 
 public class PrintSongsSteps extends SongbookSteps {
 
 	@Given("that a song has been entered and selected")
 	public void enterSong() {
 		startApp();
-		assertThat(app.getSelectedSong(), notNullValue());
 		app.setSong("[C] Lyrics to the [F] tune of [G7] this [C] song");
-	}
-
-	@When("I ask to print the song")
-	public void actionPrint() {
-		window.button("print").click();
+		assertThat(app.getSelectedSong(), notNullValue());
 	}
 
 	@Then("I see the song in a printable format")
 	public void verifyPrintedSong() throws IOException {
-		verifyRenderedPage("[C] Lyrics to the [F] tune of [G7] this [C] song");
+		verifyRenderedPage("Test Song B.html");
 	}
 
 }

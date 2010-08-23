@@ -28,7 +28,7 @@ public class SongbookApplication implements SongbookWindowView.Actions {
 	public void actionPrint() {
 		try {
 			Writer w = services.getTempHtmlFile();
-			w.append(getSelectedSong());
+			w.append(SongRenderer.format(getSelectedSong()));
 			w.flush();
 			w.close();
 			services.printFile(w);
@@ -37,8 +37,8 @@ public class SongbookApplication implements SongbookWindowView.Actions {
 		}
 	}
 
-	public String getSelectedSong() {
-		return window.getSongText();
+	public Song getSelectedSong() {
+		return new Song(window.getSongText());
 	}
 
 	public void setSong(String string) {
