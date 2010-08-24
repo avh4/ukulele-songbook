@@ -6,7 +6,9 @@ import static org.junit.matchers.JUnitMatchers.*;
 import static org.mockito.Mockito.*;
 
 import java.io.IOException;
+import java.io.InputStream;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -49,4 +51,19 @@ public class SongRendererTest {
 		assertThat(SongRenderer.format(song),
 				containsString("<div>Lyrics (9a882)</div>"));
 	}
+
+	@Test
+	public void testSpecialCharacters() throws IOException {
+		Song song = new Song(getResourceAsString("Special Characters.song"));
+		assertThat(SongRenderer.format(song), isApproved());
+	}
+
+	private String getResourceAsString(String resource) throws IOException {
+		InputStream stream = getClass().getResourceAsStream(resource);
+		if (stream == null)
+			fail("Could not find resource " + resource);
+		String songData = IOUtils.toString(stream);
+		return songData;
+	}
+
 }
