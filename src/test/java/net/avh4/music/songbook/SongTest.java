@@ -4,8 +4,11 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 import static org.junit.matchers.JUnitMatchers.*;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 public class SongTest {
@@ -40,6 +43,24 @@ public class SongTest {
 		assertThat(
 				song.getFormattedLyrics(),
 				is("<div class=\"stanza\"><div class=\"line\"><span class=\"chord\">Bbm</span>Test song on one line</div></div>"));
+	}
+
+	@Test
+	public void testFloatingChords() throws IOException {
+		Song expected = new Song(
+				getResourceAsString("Floating Chords Expected.song"));
+		Song actual = new Song(
+				getResourceAsString("Floating Chords Input.song"));
+		assertThat(actual.getFormattedLyrics(), is(expected
+				.getFormattedLyrics()));
+	}
+
+	private String getResourceAsString(String resource) throws IOException {
+		InputStream stream = getClass().getResourceAsStream(resource);
+		if (stream == null)
+			fail("Could not find resource " + resource);
+		String songData = IOUtils.toString(stream);
+		return songData;
 	}
 
 }

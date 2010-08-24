@@ -64,7 +64,6 @@ public class LyricsRendererTest {
 						+ "<div class=\"stanza\"><div class=\"line\">One</div><div class=\"line\">Two</div></div>"
 						+ "<h2>Ending</h2>"
 						+ "<div class=\"stanza\"><div class=\"line\">Three</div><div class=\"line\">Four</div></div>"));
-
 	}
 
 	@Test
@@ -76,6 +75,88 @@ public class LyricsRendererTest {
 						+ "<div class=\"stanza\"><div class=\"line\">One</div><div class=\"line\">Two</div></div>"
 						+ "<h2 class=\"repeat\">Chorus</h2>"
 						+ "<div class=\"stanza\"><div class=\"line\">Three</div><div class=\"line\">Four</div></div>"));
-
 	}
+
+	@Test
+	public void testFloatingChords() {
+		assertThat(LyricsRenderer.format("F     \nFreedom\n"),
+				is(LyricsRenderer.format("[F] Freedom")));
+	}
+
+	@Test
+	public void testFloatingChords2() {
+		assertThat(LyricsRenderer.format("F       Bb\nFreedom reigns\n"),
+				is(LyricsRenderer.format("[F] Freedom [Bb] reigns")));
+	}
+
+	/**
+	 * Words trail the end of the chords line.
+	 */
+	@Test
+	public void testFloatingChordsTrailingWords() {
+		assertThat(
+				LyricsRenderer
+						.format("F       Bb\nFreedom reigns on and on and on and on\n"),
+				is(LyricsRenderer
+						.format("[F] Freedom [Bb] reigns on and on and on and on")));
+	}
+
+	/**
+	 * The first chord is offset from the start of the line.
+	 */
+	@Test
+	public void testFloatingChordsOffset() {
+		assertThat(LyricsRenderer.format("  F     Bb\nFreedom reigns\n"),
+				is(LyricsRenderer.format("Freedom [F] [Bb] reigns")));
+	}
+
+	/**
+	 * The lyrics are offset from the start of the line.
+	 */
+	@Test
+	public void testFloatingChordsLyricsOffset() {
+		assertThat(LyricsRenderer
+				.format("F D C       Bb\n    Freedom reigns\n"),
+				is(LyricsRenderer.format("[F] [D] [C] Freedom [Bb] reigns")));
+	}
+
+	/**
+	 * A chord in the middle of a word should come after the word.
+	 */
+	@Test
+	public void testFloatingChordsMidWordChord() {
+		assertThat(LyricsRenderer.format("F   D   Bb\nFreedom reigns\n"),
+				is(LyricsRenderer.format("[F] Freedom [D] [Bb] reigns")));
+	}
+
+	/**
+	 * A chord trailing the end of the line.
+	 */
+	@Test
+	public void testFloatingChordsTrailingChord() {
+		assertThat(LyricsRenderer
+				.format("F       Bb       C\nFreedom reigns\n"),
+				is(LyricsRenderer.format("[F] Freedom [Bb] reigns [C]")));
+	}
+
+	/**
+	 * Several chords trailing the end of the line.
+	 */
+	@Test
+	public void testFloatingChordsTrailingChords() {
+		assertThat(LyricsRenderer
+				.format("F       Bb  C D Eb\nFreedom reigns\n"),
+				is(LyricsRenderer
+						.format("[F] Freedom [Bb] reigns [C] [D] [Eb]")));
+	}
+
+	/**
+	 * The chords line starts with a chord other than [F].
+	 */
+	@Test
+	public void testFloatingChordsOtherChords() {
+		assertThat(LyricsRenderer.format("C#      A\nFreedom reigns\n"),
+				is(LyricsRenderer.format("[C#] Freedom [A] reigns")));
+	}
+
 }
