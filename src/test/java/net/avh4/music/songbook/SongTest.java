@@ -73,6 +73,16 @@ public class SongTest {
 				.getFormattedLyrics()));
 	}
 
+	@Test
+	public void testUnbracketedChords() throws IOException {
+		Song expected = new Song(
+				getResourceAsString("Unbracketed Chords Expected.song"));
+		Song actual = new Song(
+				getResourceAsString("Unbracketed Chords Input.song"));
+		assertThat(actual.getFormattedLyrics(), is(expected
+				.getFormattedLyrics()));
+	}
+
 	private String getResourceAsString(String resource) throws IOException {
 		InputStream stream = getClass().getResourceAsStream(resource);
 		if (stream == null)

@@ -4,26 +4,25 @@ import java.util.Scanner;
 
 public class LyricsRenderer {
 
+	private static boolean inStanza;
+	private static String mergeline;
+
 	public static String format(String string) {
-		boolean inStanza = false;
+		inStanza = false;
 		StringBuilder sb = new StringBuilder();
 		String[] lines = string.split("\n");
-		String mergeline = null;
+		mergeline = null;
 		for (String line : lines) {
 			if (line.equals("")) {
 				// Start new stanza
-				if (inStanza) {
-					sb.append("</div>");
-					inStanza = false;
-				}
+				clearMergeline(sb);
+				endStanza(sb);
 			} else if (isSectionLine(line)) {
-				// Start the new section
-				if (inStanza) {
-					sb.append("</div>");
-					inStanza = false;
-				}
+				clearMergeline(sb);
+				endStanza(sb);
 				sb.append(processSectionName(line));
 			} else if (isFloatingChordsLine(line)) {
+				clearMergeline(sb);
 				mergeline = line;
 			} else {
 				// Process the line
@@ -34,12 +33,12 @@ public class LyricsRenderer {
 						sb.append(processSectionName(section));
 						lyrics = lyrics.substring(section.length()).trim();
 					}
-					sb.append("<div class=\"stanza\">");
-					inStanza = true;
+					inStanza(sb);
 				}
 				sb.append("<div class=\"line\">");
 				if (mergeline != null) {
 					sb.append(mergeLines(mergeline, line));
+					mergeline = null;
 				} else {
 					sb.append(processChords(lyrics));
 				}
@@ -48,6 +47,30 @@ public class LyricsRenderer {
 		}
 		sb.append("</div>");
 		return sb.toString();
+	}
+
+	private static void clearMergeline(StringBuilder sb) {
+		if (mergeline != null) {
+			inStanza(sb);
+			sb.append("<div class=\"line\">");
+			sb.append(mergeLines(mergeline, "").trim());
+			sb.append("</div>");
+			mergeline = null;
+		}
+	}
+
+	private static void inStanza(StringBuilder sb) {
+		if (!inStanza) {
+			sb.append("<div class=\"stanza\">");
+			inStanza = true;
+		}
+	}
+
+	private static void endStanza(StringBuilder sb) {
+		if (inStanza) {
+			sb.append("</div>");
+			inStanza = false;
+		}
 	}
 
 	private static String getInlineSection(String line) {
@@ -67,8 +90,13 @@ public class LyricsRenderer {
 		Scanner scanChords = new Scanner(chords);
 		Scanner scanWords = new Scanner(lyrics);
 		StringBuffer merge = new StringBuffer();
-		boolean moreWords = true;
-		scanWords.next();
+		boolean moreWords;
+		if (scanWords.hasNext()) {
+			moreWords = true;
+			scanWords.next();
+		} else {
+			moreWords = false;
+		}
 		while (scanChords.hasNext()) {
 			scanChords.next();
 			int chordIndex = scanChords.match().start();
@@ -80,7 +108,11 @@ public class LyricsRenderer {
 					moreWords = false;
 				}
 			}
-			merge.append("[" + scanChords.match().group() + "] ");
+			if (scanChords.match().group().equals("/")) {
+				merge.append("/ ");
+			} else {
+				merge.append("[" + scanChords.match().group() + "] ");
+			}
 		}
 		if (moreWords) {
 			merge.append(scanWords.match().group());
