@@ -46,13 +46,22 @@ public class SongTest {
 	}
 
 	@Test
-	public void testFloatingChords() throws IOException {
+	public void testFloatingChordsLyrics() throws IOException {
 		Song expected = new Song(
 				getResourceAsString("Floating Chords Expected.song"));
 		Song actual = new Song(
 				getResourceAsString("Floating Chords Input.song"));
 		assertThat(actual.getFormattedLyrics(), is(expected
 				.getFormattedLyrics()));
+	}
+
+	@Test
+	public void testFloatingChordsChords() throws IOException {
+		Song expected = new Song(
+				getResourceAsString("Floating Chords Expected.song"));
+		Song actual = new Song(
+				getResourceAsString("Floating Chords Input.song"));
+		assertThat(actual.getChords(), is(expected.getChords()));
 	}
 
 	@Test

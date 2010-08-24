@@ -13,18 +13,18 @@ public class Song {
 	public Song(String songText) {
 		if (songText.split("\n").length < 2) {
 			title = null;
-			chords = findChords(songText);
 			lyrics = LyricsRenderer.format(songText);
+			chords = findChords(lyrics);
 		} else {
 			title = songText.split("\n")[0];
-			chords = findChords(songText);
 			lyrics = LyricsRenderer.format(songText.split("\n", 2)[1]);
+			chords = findChords(lyrics);
 		}
 	}
 
 	private String[] findChords(String songText) {
 		ArrayList<String> chords = new ArrayList<String>();
-		Pattern p = Pattern.compile("\\[([^\\]]+)\\]");
+		Pattern p = Pattern.compile("<span class=\"chord\">([^<]+)</span>");
 		Matcher m = p.matcher(songText);
 		while (m.find()) {
 			String chord = m.group(1);
