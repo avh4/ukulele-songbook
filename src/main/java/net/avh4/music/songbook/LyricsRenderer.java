@@ -27,7 +27,13 @@ public class LyricsRenderer {
 				mergeline = line;
 			} else {
 				// Process the line
+				String lyrics = line;
 				if (!inStanza) {
+					String section = getInlineSection(lyrics);
+					if (section != null) {
+						sb.append(processSectionName(section));
+						lyrics = lyrics.substring(section.length()).trim();
+					}
 					sb.append("<div class=\"stanza\">");
 					inStanza = true;
 				}
@@ -35,13 +41,26 @@ public class LyricsRenderer {
 				if (mergeline != null) {
 					sb.append(mergeLines(mergeline, line));
 				} else {
-					sb.append(processChords(line));
+					sb.append(processChords(lyrics));
 				}
 				sb.append("</div>");
 			}
 		}
 		sb.append("</div>");
 		return sb.toString();
+	}
+
+	private static String getInlineSection(String line) {
+		if (line.contains(":")) {
+			String sectionPrefix = line.substring(0, line.indexOf(':') + 1);
+			if (isSectionLine(sectionPrefix)) {
+				return sectionPrefix;
+			} else {
+				return null;
+			}
+		} else {
+			return null;
+		}
 	}
 
 	private static String mergeLines(String chords, String lyrics) {
@@ -110,6 +129,13 @@ public class LyricsRenderer {
 		if (line.trim().endsWith(":")
 				&& line.replaceAll("[^a-zA-Z]", "").length() < 10) {
 			return true;
+		}
+		// If there is a section identifier but there are also lyrics, return
+		// false.
+		// This line will be handled later by processInlineSection()
+		if (line.contains(":")
+				&& (line.trim().length() - line.indexOf(':') > 2)) {
+			return false;
 		}
 		if (line.toLowerCase().contains("verse")
 				&& line.replaceAll("[^a-zA-Z]", "").length() < 10) {

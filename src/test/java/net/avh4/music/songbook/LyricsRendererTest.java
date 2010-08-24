@@ -67,6 +67,27 @@ public class LyricsRendererTest {
 	}
 
 	@Test
+	public void testFirstSectionInline() {
+		assertThat(LyricsRenderer.format("Verse 1: One\nTwo"),
+				is(LyricsRenderer.format("Verse 1:\nOne\nTwo")));
+	}
+
+	@Test
+	public void testMiddleSectionInline() {
+		assertThat(LyricsRenderer.format("One\nTwo\n\nChorus: Three\nFour\n"),
+				is(LyricsRenderer.format("One\nTwo\n\nChorus:\nThree\nFour\n")));
+	}
+
+	@Test
+	public void testOtherSectionsInline() {
+		assertThat(
+				LyricsRenderer
+						.format("Intro: One\nTwo\n\nEnding: Three\nFour\n"),
+				is(LyricsRenderer
+						.format("Intro:\n\nOne\nTwo\n\nEnding:\nThree\nFour\n")));
+	}
+
+	@Test
 	public void testRepeatedChorus() {
 		assertThat(
 				LyricsRenderer

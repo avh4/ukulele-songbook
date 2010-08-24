@@ -55,6 +55,15 @@ public class SongTest {
 				.getFormattedLyrics()));
 	}
 
+	@Test
+	public void testInlineHeaders() throws IOException {
+		Song expected = new Song(
+				getResourceAsString("Inline Headers Expected.song"));
+		Song actual = new Song(getResourceAsString("Inline Headers Input.song"));
+		assertThat(actual.getFormattedLyrics(), is(expected
+				.getFormattedLyrics()));
+	}
+
 	private String getResourceAsString(String resource) throws IOException {
 		InputStream stream = getClass().getResourceAsStream(resource);
 		if (stream == null)
