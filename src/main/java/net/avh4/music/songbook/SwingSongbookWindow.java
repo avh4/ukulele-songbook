@@ -2,6 +2,7 @@ package net.avh4.music.songbook;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -85,6 +86,7 @@ public class SwingSongbookWindow extends JFrame implements SongbookWindowView,
 		if (textSong == null) {
 			textSong = new JTextArea();
 			textSong.setName("song");
+			textSong.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
 			textSong.setLineWrap(true);
 		}
 		return textSong;
