@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class LyricsRenderer {
 
-	private static final String CHORD_REGEX = "^[ABCDEFG][b#]?[m+4567913susaug]*$";
+	private static final String CHORD_REGEX = "[ABCDEFG][b#]?[m+4567913susaug]*";
 	private static boolean inStanza;
 	private static String mergeline;
 
@@ -110,8 +110,8 @@ public class LyricsRenderer {
 				}
 			}
 			final String possibleChord = scanChords.match().group();
-			if (possibleChord.matches(CHORD_REGEX)) {
-				merge.append("[" + possibleChord + "] ");
+			if (possibleChord.matches(CHORD_REGEX + "\\*?")) {
+				merge.append(processChord(possibleChord) + " ");
 			} else {
 				merge.append(possibleChord + " ");
 			}
@@ -125,15 +125,24 @@ public class LyricsRenderer {
 		return processChords(merge.toString());
 	}
 
+	private static String processChord(final String chord) {
+		if (chord.endsWith("*")) {
+			return "[" + chord.substring(0, chord.length() - 1) + "]" + "*";
+		} else {
+			return "[" + chord + "]";
+		}
+	}
+
 	private static boolean isFloatingChordsLine(String line) {
 		Scanner scan = new Scanner(line);
+		scan.useDelimiter("[ \t*]+");
 		int wordCount = 0;
 		int chordCount = 0;
 		int tokenCount = 0;
 		while (scan.hasNext()) {
 			String token = scan.next();
 			tokenCount++;
-			if (token.matches(CHORD_REGEX)) {
+			if (token.matches("^" + CHORD_REGEX + "$")) {
 				chordCount++;
 			} else if (token.matches(".*[a-zA-Z].*")) {
 				wordCount++;

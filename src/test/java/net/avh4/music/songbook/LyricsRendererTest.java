@@ -188,4 +188,13 @@ public class LyricsRendererTest {
 		assertThat(LyricsRenderer.format("Cm      Am\nFreedom reigns\n"),
 				is(LyricsRenderer.format("[Cm] Freedom [Am] reigns")));
 	}
+
+	/**
+	 * Issue 10: Asterisk should not prevent chords from being recognized.
+	 */
+	@Test
+	public void testFloatingChordsWithAsterisk() {
+		assertThat(LyricsRenderer.format("Cm*     F*\nFreedom reigns\n"),
+				is(LyricsRenderer.format("[Cm]* Freedom [F]* reigns")));
+	}
 }
