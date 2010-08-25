@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 public class SwingSongbookWindow extends JFrame implements SongbookWindowView,
@@ -18,6 +19,7 @@ public class SwingSongbookWindow extends JFrame implements SongbookWindowView,
 	private JButton buttonPrint = null;
 	private final Actions handler;
 	private JTextArea textSong = null;
+	private JScrollPane jScrollPane = null;
 
 	/**
 	 * This is the default constructor
@@ -48,7 +50,7 @@ public class SwingSongbookWindow extends JFrame implements SongbookWindowView,
 			jContentPane = new JPanel();
 			jContentPane.setLayout(new BorderLayout());
 			jContentPane.add(getButtonPrint(), BorderLayout.SOUTH);
-			jContentPane.add(getTextSong(), BorderLayout.CENTER);
+			jContentPane.add(getJScrollPane(), BorderLayout.CENTER);
 		}
 		return jContentPane;
 	}
@@ -83,7 +85,7 @@ public class SwingSongbookWindow extends JFrame implements SongbookWindowView,
 		if (textSong == null) {
 			textSong = new JTextArea();
 			textSong.setName("song");
-			textSong.setPreferredSize(new Dimension(400, 300));
+			textSong.setLineWrap(true);
 		}
 		return textSong;
 	}
@@ -101,6 +103,20 @@ public class SwingSongbookWindow extends JFrame implements SongbookWindowView,
 		setLocationRelativeTo(null);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	/**
+	 * This method initializes jScrollPane
+	 * 
+	 * @return javax.swing.JScrollPane
+	 */
+	private JScrollPane getJScrollPane() {
+		if (jScrollPane == null) {
+			jScrollPane = new JScrollPane();
+			jScrollPane.setViewportView(getTextSong());
+			jScrollPane.setPreferredSize(new Dimension(500, 400));
+		}
+		return jScrollPane;
 	}
 
 }
