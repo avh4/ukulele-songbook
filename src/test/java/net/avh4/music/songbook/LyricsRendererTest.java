@@ -180,4 +180,12 @@ public class LyricsRendererTest {
 				is(LyricsRenderer.format("[C#] Freedom [A] reigns")));
 	}
 
+	/**
+	 * Issue 11: Minor chords are not recognized as floating chords.
+	 */
+	@Test
+	public void testFloatingChordsMinorChords() {
+		assertThat(LyricsRenderer.format("Cm      Am\nFreedom reigns\n"),
+				is(LyricsRenderer.format("[Cm] Freedom [Am] reigns")));
+	}
 }

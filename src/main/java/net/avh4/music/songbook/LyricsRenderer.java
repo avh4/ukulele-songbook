@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class LyricsRenderer {
 
+	private static final String CHORD_REGEX = "^[ABCDEFG][b#]?[m+4567913susaug]*$";
 	private static boolean inStanza;
 	private static String mergeline;
 
@@ -108,10 +109,11 @@ public class LyricsRenderer {
 					moreWords = false;
 				}
 			}
-			if (scanChords.match().group().equals("/")) {
-				merge.append("/ ");
+			final String possibleChord = scanChords.match().group();
+			if (possibleChord.matches(CHORD_REGEX)) {
+				merge.append("[" + possibleChord + "] ");
 			} else {
-				merge.append("[" + scanChords.match().group() + "] ");
+				merge.append(possibleChord + " ");
 			}
 		}
 		if (moreWords) {
@@ -131,7 +133,7 @@ public class LyricsRenderer {
 		while (scan.hasNext()) {
 			String token = scan.next();
 			tokenCount++;
-			if (token.matches("^[ABCDEFG][b#]?[+4567913susaug]*$")) {
+			if (token.matches(CHORD_REGEX)) {
 				chordCount++;
 			} else if (token.matches(".*[a-zA-Z].*")) {
 				wordCount++;
